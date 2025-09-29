@@ -10,6 +10,7 @@ st.write(
 # Titanic Visualization 1
 
 '''
+"Did women in first class have a higher survival rate than men in other classes?"
 )
 # Generate and display the figure
 fig1 = visualize_demographic()
