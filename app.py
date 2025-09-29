@@ -13,7 +13,8 @@ st.write(
 "Did women in first class have a higher survival rate than men in other classes?"
 )
 # Generate and display the figure
-fig1 = visualize_demographic()
+summary_df = survival_demographics(df)
+fig1 = visualize_demographic(summary_df)
 st.plotly_chart(fig1, use_container_width=True)
 
 st.write(
