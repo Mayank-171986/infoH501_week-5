@@ -56,3 +56,15 @@ def visualize_demographic(summary_df):
     fig.update_layout(showlegend=False)
     return fig
 
+
+def family_groups(df):
+# 1. Create a new column in the Titanic dataset that calculates the family size for each passenger
+    df['family_size']=df['SibSp'] + df['Parch'] + 1
+# 2. Group the passengers by family size and class
+    groupe_fam_class=df.groupby(['family_size', 'Pclass'],observed=True)
+# 3. For each group, calculate n_passengers, avg_fare, min_fare, and max_fare
+    summary=groupe_fam_class.agg(
+    n_passengers=('PassengerId', 'count'),avg_fare=('Fare', 'mean'),min_fare=('Fare', 'min'),max_fare=('Fare', 'max')).reset_index()  
+#4. Return a table that sort the result for easily interpreting first by class and then Family Size
+    summary= summary.sort_values(by=['Pclass', 'family_size'])
+    return summary
