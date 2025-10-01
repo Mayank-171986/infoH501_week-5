@@ -61,9 +61,9 @@ def family_groups(df):
 # 1. Create a new column in the Titanic dataset that calculates the family size for each passenger
     df['family_size']=df['SibSp'] + df['Parch'] + 1
 # 2. Group the passengers by family size and class
-    groupe_fam_class=df.groupby(['family_size', 'Pclass'],observed=True)
+    group_fam_class=df.groupby(['family_size', 'Pclass'],observed=True)
 # 3. For each group, calculate n_passengers, avg_fare, min_fare, and max_fare
-    summary=groupe_fam_class.agg(
+    summary=group_fam_class.agg(
     n_passengers=('PassengerId', 'count'),avg_fare=('Fare', 'mean'),min_fare=('Fare', 'min'),max_fare=('Fare', 'max')).reset_index()  
 #4. Return a table that sort the result for easily interpreting first by class and then Family Size
     summary= summary.sort_values(by=['Pclass', 'family_size'])
@@ -76,3 +76,19 @@ def last_names(df):
     last_names_count=df['last_names'].value_counts()
     return last_names_count
 
+def visualize_families(summary_df):
+    # Create scatter plot to show fare variation by family size and class
+    fig = px.scatter(
+        summary_df,
+        x='family_size',
+        y='avg_fare',
+        size='n_passengers',
+        color='Pclass',
+        hover_data=['min_fare', 'max_fare'],
+        title='Average Fare by Family Size and Passenger Class',
+        labels={'family_size': 'Family Size', 'avg_fare': 'Average Fare'},
+        color_continuous_scale='Viridis'
+    )
+
+    fig.update_layout(xaxis=dict(dtick=1))
+    return fig

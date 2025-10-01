@@ -17,15 +17,21 @@ st.write(
 summary_df = survival_demographics(df)
 fig1 = visualize_demographic(summary_df)
 st.plotly_chart(fig1, use_container_width=True)
+fig1.show()
 
 st.write(
 '''
 # Titanic Visualization 2
 '''
+"Did larger families in third class pay significantly less per person than smaller families in first class?"
 )
+summary = family_groups(df)
+df_lastname = last_names(df)
 # Generate and display the figure
-fig2 = visualize_families()
+fig2 = visualize_families(summary)
 st.plotly_chart(fig2, use_container_width=True)
+
+fig2.show()
 
 st.write(
 '''
