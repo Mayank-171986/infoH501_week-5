@@ -68,3 +68,11 @@ def family_groups(df):
 #4. Return a table that sort the result for easily interpreting first by class and then Family Size
     summary= summary.sort_values(by=['Pclass', 'family_size'])
     return summary
+
+def last_names(df):
+# 1. Create a new column in the Titanic dataset that extracts the last names of passengers
+    df['last_names'] = df['Name'].str.extract(r',\s*([^.]*)\.')
+# 2. Return a count of how many times each last name appears in the dataset
+    last_names_count=df['last_names'].value_counts()
+    return last_names_count
+
